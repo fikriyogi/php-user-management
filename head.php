@@ -49,6 +49,66 @@ function startRefresh() {
 }
 // <div id="content_div_id"></div>
 </script>
+
+<!-- chat plus notification -->
+<script>
+$(document).ready(function(){
+ 
+ function load_unseen_notification(view = '')
+ {
+  $.ajax({
+   url:"php/fetch-chat.php",
+   method:"POST",
+   data:{view:view},
+   dataType:"json",
+   success:function(data)
+   {
+    $('.dropdown-menu').html(data.notification);
+    if(data.unseen_notification > 0)
+    {
+     $('.count').html(data.unseen_notification);
+    }
+   }
+  });
+ }
+ 
+ load_unseen_notification();
+ 
+ $('#comment_form').on('submit', function(event){
+  event.preventDefault();
+  if($('#subject').val() != '' && $('#comment').val() != '')
+  {
+   var form_data = $(this).serialize();
+   $.ajax({
+    url:"php/insert-chat.php",
+    method:"POST",
+    data:form_data,
+    success:function(data)
+    {
+     $('#comment_form')[0].reset();
+     load_unseen_notification();
+    }
+   });
+  }
+  else
+  {
+   alert("Both Fields are Required");
+  }
+ });
+ 
+ $(document).on('click', '.dropdown-toggle', function(){
+  $('.count').html('');
+  load_unseen_notification('yes');
+ });
+ 
+ setInterval(function(){ 
+  load_unseen_notification();; 
+ }, 5000);
+ 
+});
+</script>
+
+
 	<!-- <script type="text/javascript">
 		var refreshId = setInterval(function() {
 			$('#tampildisini').load('analytic.php');
@@ -166,7 +226,7 @@ function startRefresh() {
 							<a class="nav-icon dropdown-toggle ml-2" href="#" data-toggle="dropdown">
 								<div class="position-relative">
 									<i class="align-middle" data-feather="message-square"></i>
-									<span class="indicator">4</span>
+									<span class="indicator count">4</span>
 								</div>
 							</a>
 							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right py-0">
@@ -175,25 +235,8 @@ function startRefresh() {
 										4 New Messages
 									</div>
 								</div>
-								<div class="list-group">
-									<?php
-									include 'core/db_connect.php';
-									$sql = mysqli_query($connect, "SELECT * FROM dps ORDER BY id DESC LIMIT 5");
-									while($row=mysqli_fetch_array($sql)) {
-									?>
-									<a href="#" class="list-group-item">
-										<div class="row no-gutters align-items-center">
-											<div class="col-2">
-												<img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle" alt="Kathy Davis">
-											</div>
-											<div class="col-10 pl-2">
-												<div class="text-dark"><?= $row['nama']?></div>
-												<div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu tortor.</div>
-												<div class="text-muted small mt-1">15m ago</div>
-											</div>
-										</div>
-									</a>
-									<?php } ?>
+								<div class="list-group dropdown-menu">
+									
 								</div>
 								<div class="dropdown-menu-footer">
 									<a href="#" class="text-muted">Show all messages</a>
@@ -371,3 +414,4 @@ function startRefresh() {
 </div>
 
 </div>
+
