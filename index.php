@@ -3,7 +3,8 @@
 <!-- <div id="tampildisini"></div> -->
 
 <main class="content" id="main">
-	<div class="container-fluid p-0">
+
+<div class="container-fluid p-0">
 		<div class="row" height="50px">
 			<div class="col-6 myautoscroll">
 				<div id="content_div_id"></div>
@@ -17,7 +18,7 @@
 			    <thead>
 			        <tr >
 			            <td >
-			                Heading
+			                selamat
 			            </td>
 			            <td >
 			                Heading
@@ -944,31 +945,31 @@
 					</div>
 					<div class="card-body">
 						<div class="media">
-							<img src="img/avatars/avatar-5.jpg" width="36" height="36" class="rounded-circle mr-2" alt="Kathy Davis">
-							<div class="media-body">
-								<small class="float-right text-navy">15m ago</small>
-								<strong>Kathy Davis</strong> started following <strong>Marie Salter</strong><br />
-								<small class="text-muted">Today 6:41 pm</small><br />
-
-							</div>
-						</div>
-
-						<hr />
-						<div class="media">
 							<img src="img/avatars/avatar-5.jpg" width="36" height="36" class="rounded-circle mr-2" alt="Andrew Jones">
 							<div class="media-body">
 								<small class="float-right text-navy">1h ago</small>
 								<strong>Andrew Jones</strong> posted something on <strong>Marie Salter</strong>'s timeline<br />
 								<small class="text-muted">Today 5:41 pm</small>
 
-								<div class="border text-sm text-muted p-2 mt-1">
-									Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem...
-								</div>
+								
 							</div>
 						</div>
 
 
 						<hr />
+						<form method="post" id="comment_form">
+									<div class="form-group">
+     <label>Enter Subject</label>
+     <input type="text" name="subject" id="subject" class="form-control">
+    </div>
+    <div class="form-group">
+     <label>Enter Comment</label>
+     <textarea name="comment" id="comment" class="form-control" rows="5"></textarea>
+    </div>
+    <div class="form-group">
+     <input type="submit" name="post" id="post" class="btn btn-info" value="Post" />
+    </div>
+								</form>
 						<a href="#" class="btn btn-primary btn-block">Load more</a>
 					</div>
 				</div>
@@ -1034,6 +1035,7 @@
 		<button class="open-button" onclick="openForm()"><i class="align-middle" data-feather="message-square"></i></button>
 
 	</div>
+	
 </main>
 
 <footer class="footer">
