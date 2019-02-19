@@ -8,11 +8,33 @@ if(isset($_POST['btn-add-user']))
 	
 	if(mysqli_query($connect, "INSERT INTO users(username,email,password) VALUES('".$uname."','".$email."','".$upass."')"))
 	{
-            $msg = 'Congratulation you have successfully registered.';       
+            $msg = "<div class='alert alert-success alert-dismissible' role='alert'>
+                        <div class='alert-icon'>
+                            <i class='far fa-fw fa-bell'></i>
+                        </div>
+                        <div class='alert-message'>
+                            <strong>Hello there!</strong> A simple danger alert—check it out!
+                        </div>
+
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>";       
 	}
 	else
 	{
-            $msg = 'Error while registering you...';
+            $msg = "<div class='alert alert-danger alert-dismissible' role='alert'>
+                        <div class='alert-icon'>
+                            <i class='far fa-fw fa-bell'></i>
+                        </div>
+                        <div class='alert-message'>
+                            <strong>Hello there!</strong> A simple danger alert—check it out!
+                        </div>
+
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>";
 	}
 }
 
@@ -21,12 +43,11 @@ if(isset($_POST['btn-add-user']))
 <main class="content">
     <div class="container-fluid p-0">
 
-        <h1 class="h3 mb-3">Settings</h1>
+        <h1 class="h3 mb-3">Add User</h1>
 
         <div class="row">
             <div class="col-md-4 col-xl-3">
 
-            	<?= $msg ?>
 
                 <div class="card">
                     <div class="card-header">
@@ -47,6 +68,8 @@ if(isset($_POST['btn-add-user']))
             </div>
 
             <div class="col-md-8 col-xl-9">
+                
+                <?= @$msg ?>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="account" role="tabpanel">
 

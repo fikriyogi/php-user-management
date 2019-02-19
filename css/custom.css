@@ -1,3 +1,42 @@
+div.myautoscroll {
+    height: 40ex;
+    width: 40em;
+    overflow: hidden;
+    /*border: 1px solid #444;*/
+    margin-bottom: 3em;
+}
+div.myautoscroll:hover {
+    overflow: auto;
+}
+div.myautoscroll p {
+    /*padding-right: 16px;*/
+}
+div.myautoscroll:hover p {
+    padding-right: 0px;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800);
 /*! * Font Awesome Free 5.6.3 by @fontawesome - https://fontawesome.com * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) */
  @keyframes fa-spin{
@@ -12984,7 +13023,7 @@ a.badge-muted:focus,a.badge-muted:hover,a.badge-silver:focus,a.badge-silver:hove
     position:relative;
     margin-bottom:1rem;
     border:1px solid transparent;
-    border-radius:6px
+    /* border-radius:6px */
 }
 .alert-heading{
     color:inherit
@@ -13027,7 +13066,7 @@ a.badge-muted:focus,a.badge-muted:hover,a.badge-silver:focus,a.badge-silver:hove
 .alert-success{
     color:#0e621c;
     background-color:#d1f2d7;
-    border-color:#bfedc7
+    border-color:#bfedc7;
 }
 .alert-success hr{
     border-top-color:#abe7b6
@@ -21694,7 +21733,8 @@ dl,ol,p,ul{
     border-top:1px solid #4d4d4d
 }
 .alert{
-    padding:.625rem .9375rem
+    padding:.625rem .9375rem;
+    z-index: 1;
 }
 /*.badge{
     display:inline;
@@ -24242,13 +24282,14 @@ pre{
     background:#fff;
     box-shadow:0 .0625rem .375rem rgba(0,0,0,.75)
 }
-.datepicker.datepicker-dropdown{
+/*.datepicker.datepicker-dropdown{
     width:20rem;
     border-radius:9px;
     padding:0;
     z-index:1060!important
 }
-.bootstrap-timepicker-widget.dropdown-menu.open:after,.bootstrap-timepicker-widget.dropdown-menu.open:before,.datepicker.datepicker-dropdown:after,.datepicker.datepicker-dropdown:before{
+.bootstrap-timepicker-widget.dropdown-menu.open:after,.bootstrap-timepicker-widget.dropdown-menu.open:before,
+.datepicker.datepicker-dropdown:after,.datepicker.datepicker-dropdown:before{
     display:none
 }
 .datepicker .datepicker-switch,.datepicker .next,.datepicker .prev{
@@ -24370,7 +24411,7 @@ pre{
 }
 .input-daterange.input-group-sm input:last-child{
     border-radius:0 3px 3px 0!important
-}
+}*/
 .bootstrap-select .btn.dropdown-toggle{
     -webkit-transition:all .15s ease-in-out;
     -moz-transition:all .15s ease-in-out;
@@ -26941,4 +26982,9 @@ pre{
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
+}
+
+.iframe {
+    outline: none;
+    border: none;
 }

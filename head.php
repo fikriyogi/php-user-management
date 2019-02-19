@@ -16,7 +16,7 @@ $userRow=mysqli_fetch_assoc($res);
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 
  <!-- <?php date_default_timezone_set('<?= $userRow["timezone"]; ?>');  ?> -->
 <head>
@@ -26,6 +26,7 @@ $userRow=mysqli_fetch_assoc($res);
 	<meta name="description" content="Responsive Bootstrap 4 Admin Template">
 	<meta name="author" content="Bootlab">
 
+
 	<title>User Management</title>
 
 	<link href="css/app.css" rel="stylesheet">
@@ -34,6 +35,20 @@ $userRow=mysqli_fetch_assoc($res);
 	<script src="js/custom.js" type="text/javascript"></script>
 
 
+	<!-- load automaticly without refresh -->
+<script type="text/javascript">
+	$(function() {
+    startRefresh();
+});
+
+function startRefresh() {
+    setTimeout(startRefresh,1000);
+    $.get('iframe.php', function(data) {
+        $('#content_div_id').html(data);    
+    });
+}
+// <div id="content_div_id"></div>
+</script>
 	<!-- <script type="text/javascript">
 		var refreshId = setInterval(function() {
 			$('#tampildisini').load('analytic.php');
@@ -41,7 +56,18 @@ $userRow=mysqli_fetch_assoc($res);
 	</script> -->
 
 </head>
+<!-- <div class='alert alert-success alert-dismissible' role='alert'>
+    <div class='alert-icon'>
+        <i class='far fa-fw fa-bell'></i>
+    </div>
+    <div class='alert-message'>
+        <strong>Hello there!</strong> A simple danger alert—check it out!
+    </div>
 
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        <span aria-hidden='true'>&times;</span>
+    </button>
+</div> -->
 <body>
 	
 	<div class="wrapper">
@@ -72,14 +98,15 @@ $userRow=mysqli_fetch_assoc($res);
 						Users
 					</li>
 					<li class="sidebar-item">
+						<a href="admin.php"  class="font-weight-bold sidebar-link ">
+				              <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Admin</span>
+				            </a>
+					</li>	
+					<li class="sidebar-item">
 						<a href="user-list.php"  class="font-weight-bold sidebar-link ">
-              <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Users</span>
-            </a>
-						<!-- <ul id="ui" class="sidebar-dropdown list-unstyled collapse ">
-							<li class="sidebar-item"><a class="sidebar-link" href="ui-alerts.html">Alerts</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="ui-typography.html">Typography</a></li>
-						</ul> -->
-					</li>
+				              <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Users</span>
+				            </a>
+					</li>		
 					<li class="sidebar-item">
 						<a href="user-role.php"  class="font-weight-bold sidebar-link ">
               <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Roles</span>
@@ -151,7 +178,7 @@ $userRow=mysqli_fetch_assoc($res);
 								<div class="list-group">
 									<?php
 									include 'core/db_connect.php';
-									$sql = mysqli_query($connect, "SELECT * FROM dps ORDER BY id_dps DESC LIMIT 5");
+									$sql = mysqli_query($connect, "SELECT * FROM dps ORDER BY id DESC LIMIT 5");
 									while($row=mysqli_fetch_array($sql)) {
 									?>
 									<a href="#" class="list-group-item">

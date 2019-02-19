@@ -1,4 +1,4 @@
-<!-- <?php 
+ <?php 
 
 $servername = "127.0.0.1";
 $username = "root";
@@ -12,7 +12,7 @@ if($connect->connect_error) {
 } 
 
 
-?> -->
+?> 
 
 <?php
 ob_start(); //ditambahkan untuk mengabaikan pengiriman header, berlaku juga untuk mengabaikan pesan error header

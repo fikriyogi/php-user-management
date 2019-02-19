@@ -271,7 +271,6 @@ function userLog() {
         $device = UserInfo::get_device();
         $url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         $user = 3;
-        $sr = LANG();
         $mac =  TotalAnalytic();
         // $_SESSION['user']
         mysqli_query($connect, "INSERT INTO 

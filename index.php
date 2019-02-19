@@ -4,33 +4,74 @@
 
 <main class="content" id="main">
 	<div class="container-fluid p-0">
+		<div class="row" height="50px">
+			<div class="col-6 myautoscroll">
+				<div id="content_div_id"></div>
+				<!-- <iframe class="iframe"  allowTransparency="true" background="transparent" name="iframetanggal" id="iframetanggal" src="iframe.php" width="100%"></iframe> -->
+				<!-- <?php include 'iframe.php' ?> -->
+			</div>
+			<div class="col-6">
+				
 
+<table class="table" >
+			    <thead>
+			        <tr >
+			            <td >
+			                Heading
+			            </td>
+			            <td >
+			                Heading
+			            </td>
+
+			            <td >
+			                Heading
+			            </td>
+			        </tr>
+			    </thead>
+    <tbody class="tbody">
+        <?php  
+							$sql="SELECT CONCAT(YEAR(visit_date),'/',MONTH(visit_date)) AS tahun_bulan, ROUND((COUNT(visit_date)/(SELECT COUNT(*) FROM analytic))*100,0) AS persentasi, COUNT(*) AS jumlah_bulanan FROM analytic GROUP BY YEAR(visit_date),MONTH(visit_date)";
+							$result = mysqli_query($connect, $sql);
+							@$no1++;
+							while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+							echo "<tr>" ;
+							echo "<td>" . $no1++ . "</td>";
+							echo	"<td>Jam " . $row['tahun_bulan'] . "</td>";
+							echo	"<td class='text-center'>" . $row['jumlah_bulanan'] . "</td>";
+							echo	"<td class='text-left'> <div class='progress-bar bg-bar' role='progressbar' style='width: " . $row['persentasi'] . "%' aria-valuenow='" . $row['persentasi'] . "' aria-valuemin='0' aria-valuemax='100'>" . $row['persentasi'] . "%</div></td>";
+							echo	"</tr>";
+							}
+						?>
+    </tbody>
+</table>
+			</div>
+		</div>
 		<div class="row">
 				<div class="col-6">
 					<div class="carsd">
 					<div class="card-header">
-						<h5 class="card-title">Kujungan Terkini</h5>
+						<h5 class="card-title">Trafik Sibuk</h5>
 						<h6 class="card-subtitle text-muted">Add <code>.table-sm</code> to make tables more compact by cutting cell padding in half.</h6>
 					</div>
 					<table class="table table-striped table-hover table-sm">
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Operation System</th>
-								<th class="text-center">Users</th>
+								<th>Waktu</th>
+								<th class="text-center">Kunjungan</th>
 								<th class="text-left">Persentasi</th>
 							</tr>
 						</thead>
 						<tbody>
 						<?php  
-							$sql="SELECT visit_date, COUNT(visit_date) AS total, ROUND((COUNT(visit_date)/(SELECT COUNT(*) FROM analytic))*100,0) AS persentasi FROM analytic GROUP BY visit_date ORDER BY total  DESC LIMIT 6";
+							$sql="SELECT COUNT(*) AS `total`, DATE_FORMAT(visit_date, '%H') AS `jam`, ROUND((COUNT(visit_date)/(SELECT COUNT(*) FROM analytic))*100,0) AS persentasi FROM `analytic` GROUP BY `jam` ORDER BY total DESC";
 							$result = mysqli_query($connect, $sql);
-							@$no1++;
+							@$no9++;
 							while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 							echo "<tr>" ;
-							echo "<td>" . $no1++ . "</td>";
-							echo	"<td>" . $row['visit_date'] . "</td>";
-							echo	"<td class='text-center'>" . $row['total'] . "</td>";
+							echo "<td>" . $no9++ . "</td>";
+							echo	"<td>Jam " . $row['jam'] . "</td>";
+							echo	"<td class='text-center'>" . $row['total']; if ($row['total'] < 10) { echo "besar"; } "</td>";
 							echo	"<td class='text-left'> <div class='progress-bar bg-bar' role='progressbar' style='width: " . $row['persentasi'] . "%' aria-valuenow='" . $row['persentasi'] . "' aria-valuemin='0' aria-valuemax='100'>" . $row['persentasi'] . "%</div></td>";
 							echo	"</tr>";
 							}
@@ -46,7 +87,7 @@
 					<div class="carsd">
 						<?= UI()?>
 					<div class="card-header">
-						<h5 class="card-title">Kujungan Harian</h5>
+						<h5 class="card-title">Trafik Harian</h5>
 						<h6 class="card-subtitle text-muted">Add <code>.table-sm</code> to make tables more compact by cutting cell padding in half.</h6>
 					</div>
 					<table class="table table-striped table-hover table-sm">
@@ -83,244 +124,228 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="row">
-<div class="col-md-4 col-xl-4">
+					<div class="col-md-4 col-xl-4">
 
-	<p><?= mac_address()?></p>
- <div class="carsd">
-     <div class="card-header">
-         <h5 class="card-title mb-0">Profile Settings</h5>
-     </div>
+						<p><?= mac_address()?></p>
+					<div class="carsd">
+					     <div class="card-header">
+					         <h5 class="card-title mb-0">Profile Settings</h5>
+					     </div>
 
-     <div class="list-group list-group-flush" role="tablist">
-         <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account" role="tab">Operation System</a>
-         <a class="list-group-item list-group-item-action" data-toggle="list" href="#browser" role="tab">Browser</a>
-         <a class="list-group-item list-group-item-action" data-toggle="list" href="#device" role="tab">Device</a>
-         <a class="list-group-item list-group-item-action" data-toggle="list" href="#url" role="tab">Url</a>
-     </div>
- </div>
-</div>
-
-<div class="col-md-8 col-xl-8">
- <div class="tab-content">
-     <div class="tab-pane fade show active" id="account" role="tabpanel">
-
-         <div class="carsd">
-					<div class="card-header">
-						<h5 class="card-title">Condensed Table</h5>
-						<h6 class="card-subtitle text-muted">Add <code>.table-sm</code> to make tables more compact by cutting cell padding in half.</h6>
+					     <div class="list-group list-group-flush" role="tablist">
+					         <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account" role="tab">Operation System</a>
+					         <a class="list-group-item list-group-item-action" data-toggle="list" href="#browser" role="tab">Browser</a>
+					         <a class="list-group-item list-group-item-action" data-toggle="list" href="#device" role="tab">Device</a>
+					         <a class="list-group-item list-group-item-action" data-toggle="list" href="#url" role="tab">Url</a>
+					     </div>
 					</div>
-					<table class="table table-striped table-hover table-sm">
-						<thead>
-							<tr>
-								<th>No</th>
-								<th>Operation System</th>
-								<th class="text-center">Users</th>
-								<th class="text-left">Persentasi</th>
-							</tr>
-						</thead>
-						<tbody>
-						<?php  
-							$sql="SELECT os, COUNT(os) AS total, ROUND((COUNT(os)/(SELECT COUNT(*) FROM analytic))*100,0) AS persentasi FROM analytic GROUP BY os ORDER BY total  DESC";
-							$result = mysqli_query($connect, $sql);
-							@$no1++;
-							while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-							echo "<tr>" ;
-							echo "<td>" . $no1++ . "</td>";
-							echo	"<td>" . $row['os'] . "</td>";
-							echo	"<td class='text-center'>" . $row['total'] . "</td>";
-							echo	"<td class='text-left'> <div class='progress-bar bg-bar' role='progressbar' style='width: " . $row['persentasi'] . "%' aria-valuenow='" . $row['persentasi'] . "' aria-valuemin='0' aria-valuemax='100'>" . $row['persentasi'] . "%</div></td>";
-							echo	"</tr>";
-							}
-						?>
-						</tbody>
-					</table>
-					
 				</div>
 
-     </div>
-     <div class="tab-pane fade" id="browser" role="tabpanel">
-         <div class="carsd">
-					<div class="card-header">
-						<h5 class="card-title">Condensed Table</h5>
-						<h6 class="card-subtitle text-muted">Add <code>.table-sm</code>
-							<?php
-								$mac = system('arp -s');
-								echo $mac;
+			<div class="col-md-8 col-xl-8">
+			 <div class="tab-content">
+			     <div class="tab-pane fade show active" id="account" role="tabpanel">
+			         <div class="carsd">
+						<div class="card-header">
+							<h5 class="card-title">Condensed Table</h5>
+							<h6 class="card-subtitle text-muted">Add <code>.table-sm</code> to make tables more compact by cutting cell padding in half.</h6>
+						</div>
+						<table class="table table-striped table-hover table-sm">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>Operation System</th>
+									<th class="text-center">Users</th>
+									<th class="text-left">Persentasi</th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php  
+								$sql="SELECT os, COUNT(os) AS total, ROUND((COUNT(os)/(SELECT COUNT(*) FROM analytic))*100,0) AS persentasi FROM analytic GROUP BY os ORDER BY total  DESC";
+								$result = mysqli_query($connect, $sql);
+								@$no7++;
+								while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+								echo "<tr>" ;
+								echo "<td>" . $no7++ . "</td>";
+								echo	"<td>" . $row['os'] . "</td>";
+								echo	"<td class='text-center'>" . $row['total'] . "</td>";
+								echo	"<td class='text-left'> <div class='progress-bar bg-bar' role='progressbar' style='width: " . $row['persentasi'] . "%' aria-valuenow='" . $row['persentasi'] . "' aria-valuemin='0' aria-valuemax='100'>" . $row['persentasi'] . "%</div></td>";
+								echo	"</tr>";
+								}
 							?>
-						 to make tables more compact by cutting cell padding in half.</h6>
+							</tbody>
+						</table>
 					</div>
-					<table class="table table-striped table-hover table-sm">
-						<thead>
-							<tr>
-								<th>No</th>
-								<th>Operation System</th>
-								<th class="text-right">Users</th>
-								<th class="text-right">Persentasi</th>
-							</tr>
-						</thead>
-						<tbody>
-						<?php  
-							$sql="SELECT browser, COUNT(browser) AS pengguna, ROUND((COUNT(browser)/(SELECT COUNT(*) FROM analytic))*100,0) AS persentasi FROM analytic GROUP BY browser ORDER BY pengguna  DESC";
-							$result = mysqli_query($connect, $sql);
-							@$no++;
-							while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-							echo "<tr>" ;
-							echo "<td>" . $no++ . "</td>";
-							echo	"<td>" . $row['browser'] . "</td>";
-							echo	"<td class='text-right'>" . $row['pengguna'] . "</td>";
-							echo	"<td class='text-left'> <div class='progress-bar bg-bar' role='progressbar' style='width: " . $row['persentasi'] . "%' aria-valuenow='" . $row['persentasi'] . "' aria-valuemin='0' aria-valuemax='100'>" . $row['persentasi'] . "%</div></td>";
-							echo	"</tr>";
-							}
-						?>
-						</tbody>
-					</table>
-					
-				</div>
-     </div>
-     <div class="tab-pane fade" id="device" role="tabpanel">
-
-         <div class="carsd">
-					<div class="card-header">
-						<h5 class="card-title">Device</h5>
-						<h6 class="card-subtitle text-muted">Add <code>.table-sm</code> to make tables more compact by cutting cell padding in half.</h6>
-					</div>
-					<table class="table table-striped table-hover table-sm">
-						<thead>
-							<tr>
-								<th>No</th>
-								<th>Device</th>
-								<th class="text-right">Users</th>
-								<th class="text-right">Persentasi</th>
-							</tr>
-						</thead>
-						<tbody>
-						<?php  
-							$sql="SELECT device, COUNT(device) AS total, ROUND((COUNT(device)/(SELECT COUNT(*) FROM analytic))*100,0) AS persentasi FROM analytic GROUP BY device ORDER BY total  DESC";
-							$result = mysqli_query($connect, $sql);
-							@$no2++;
-							while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-							echo "<tr>" ;
-							echo "<td>" . $no2++ . "</td>";
-							echo	"<td>" . $row['device'] . "</td>";
-							echo	"<td class='text-right'>" . $row['total'] . "</td>";
-							echo	"<td class='text-left'> <div class='progress-bar bg-bar' role='progressbar' style='width: " . $row['persentasi'] . "%' aria-valuenow='" . $row['persentasi'] . "' aria-valuemin='0' aria-valuemax='100'>" . $row['persentasi'] . "%</div></td>";
-							echo	"</tr>";
-							}
-						?>
-						</tbody>
-					</table>
-				</div>
-     </div>
-     <div class="tab-pane fade" id="url" role="tabpanel">
-         <div class="carsd">
-					<div class="card-header">
-						<h5 class="card-title">Content</h5>
-						<h6 class="card-subtitle text-muted">Add <code>.table-sm</code>
-							<?php
-								$mac = system('arp -s');
-								echo $mac;
+			     </div>
+			     <div class="tab-pane fade" id="browser" role="tabpanel">
+			         <div class="carsd">
+						<div class="card-header">
+							<h5 class="card-title">Condensed Table</h5>
+							<h6 class="card-subtitle text-muted">Add <code>.table-sm</code>
+								<?php
+									$mac = system('arp -s');
+									echo $mac;
+								?>
+							 to make tables more compact by cutting cell padding in half.</h6>
+						</div>
+						<table class="table table-striped table-hover table-sm">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>Operation System</th>
+									<th class="text-right">Users</th>
+									<th class="text-right">Persentasi</th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php  
+								$sql="SELECT browser, COUNT(browser) AS pengguna, ROUND((COUNT(browser)/(SELECT COUNT(*) FROM analytic))*100,0) AS persentasi FROM analytic GROUP BY browser ORDER BY pengguna  DESC";
+								$result = mysqli_query($connect, $sql);
+								@$no++;
+								while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+								echo "<tr>" ;
+								echo "<td>" . $no++ . "</td>";
+								echo	"<td>" . $row['browser'] . "</td>";
+								echo	"<td class='text-right'>" . $row['pengguna'] . "</td>";
+								echo	"<td class='text-left'> <div class='progress-bar bg-bar' role='progressbar' style='width: " . $row['persentasi'] . "%' aria-valuenow='" . $row['persentasi'] . "' aria-valuemin='0' aria-valuemax='100'>" . $row['persentasi'] . "%</div></td>";
+								echo	"</tr>";
+								}
 							?>
-						 to make tables more compact by cutting cell padding in half.</h6>
+							</tbody>
+						</table>
 					</div>
-					<table class="table table-striped table-hover table-sm">
-						<thead>
-							<tr>
-								<th>No</th>
-								<th>Content</th>
-								<th class="text-right">Users</th>
-								<th class="text-right">Persentasi</th>
-							</tr>
-						</thead>
-						<tbody>
-						<?php  
-							$sql="SELECT url, COUNT(url) AS pengguna, ROUND((COUNT(url)/(SELECT COUNT(*) FROM analytic))*100,0) AS persentasi FROM analytic GROUP BY url ";
-							$result = mysqli_query($connect, $sql);
-							@$no6++;
-							while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-							echo "<tr>" ;
-							echo "<td>" . $no6++ . "</td>";
-							echo	"<td>" . $row['url'] . "</td>";
-							echo	"<td class='text-right'>" . $row['pengguna'] . "</td>";
-							echo	"<td class='text-left'> <div class='progress-bar bg-bar' role='progressbar' style='width: " . $row['persentasi'] . "%' aria-valuenow='" . $row['persentasi'] . "' aria-valuemin='0' aria-valuemax='100'>" . $row['persentasi'] . "%</div></td>";
-							echo	"</tr>";
-							}
-						?>
-						</tbody>
-					</table>
-				</div>
-     </div>
-
-
- </div>
-</div>
-</div>
+			     </div>
+			     <div class="tab-pane fade" id="device" role="tabpanel">
+			         <div class="carsd">
+						<div class="card-header">
+							<h5 class="card-title">Device</h5>
+							<h6 class="card-subtitle text-muted">Add <code>.table-sm</code> to make tables more compact by cutting cell padding in half.</h6>
+						</div>
+						<table class="table table-striped table-hover table-sm">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>Device</th>
+									<th class="text-right">Users</th>
+									<th class="text-right">Persentasi</th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php  
+								$sql="SELECT device, COUNT(device) AS total, ROUND((COUNT(device)/(SELECT COUNT(*) FROM analytic))*100,0) AS persentasi FROM analytic GROUP BY device ORDER BY total  DESC";
+								$result = mysqli_query($connect, $sql);
+								@$no2++;
+								while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+								echo "<tr>" ;
+								echo "<td>" . $no2++ . "</td>";
+								echo	"<td>" . $row['device'] . "</td>";
+								echo	"<td class='text-right'>" . $row['total'] . "</td>";
+								echo	"<td class='text-left'> <div class='progress-bar bg-bar' role='progressbar' style='width: " . $row['persentasi'] . "%' aria-valuenow='" . $row['persentasi'] . "' aria-valuemin='0' aria-valuemax='100'>" . $row['persentasi'] . "%</div></td>";
+								echo	"</tr>";
+								}
+							?>
+							</tbody>
+						</table>
+					</div>
+			     </div>
+			     <div class="tab-pane fade" id="url" role="tabpanel">
+			         <div class="carsd">
+						<div class="card-header">
+							<h5 class="card-title">Content</h5>
+							<h6 class="card-subtitle text-muted">Add <code>.table-sm</code>
+								<?php
+									$mac = system('arp -s');
+									echo $mac;
+								?>
+							 to make tables more compact by cutting cell padding in half.</h6>
+						</div>
+						<table class="table table-striped table-hover table-sm">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>Content</th>
+									<th class="text-right">Users</th>
+									<th class="text-right">Persentasi</th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php  
+								$sql="SELECT url, COUNT(url) AS pengguna, ROUND((COUNT(url)/(SELECT COUNT(*) FROM analytic))*100,0) AS persentasi FROM analytic GROUP BY url ORDER BY pengguna DESC ";
+								$result = mysqli_query($connect, $sql);
+								@$no6++;
+								while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+								echo "<tr>" ;
+								echo "<td>" . $no6++ . "</td>";
+								echo	"<td>" . $row['url'] . "</td>";
+								echo	"<td class='text-right'>" . $row['pengguna'] . "</td>";
+								echo	"<td class='text-left'> <div class='progress-bar bg-bar' role='progressbar' style='width: " . $row['persentasi'] . "%' aria-valuenow='" . $row['persentasi'] . "' aria-valuemin='0' aria-valuemax='100'>" . $row['persentasi'] . "%</div></td>";
+								echo	"</tr>";
+								}
+							?>
+							</tbody>
+						</table>
+						</div>
+				     </div>
+				 </div>
 			</div>
 		</div>
-
-		<div class="row">
-			<div class="col-4">
-				
-			</div>
-			<div class="col-8">
-				
-			</div>
-		</div>
+	</div>	
+</div>
 
 		<div class="row">
 			<div class="col-4">
 				<!-- BEGIN card -->
-		<div class="card m-b-15">
-			<!-- BEGIN card-header -->
-			<div class="card-header">
-				<h4 class="card-header-title">
-					OVERVIEW
-				</h4>
-				<!-- <div class="card-header-btn">
-					<div class="dropdown dropdown-icon">
-						<a href="#" class="btn" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
-						<div class="dropdown-menu dropdown-menu-right">
-							<a href="#" class="dropdown-item">Today</a>
-							<a href="#" class="dropdown-item">Yesterday</a>
-							<a href="#" class="dropdown-item active">Last 7 days</a>
-							<a href="#" class="dropdown-item">Last 28 days</a>
+			<div class="card m-b-15">
+				<!-- BEGIN card-header -->
+				<div class="card-header">
+					<h4 class="card-header-title">
+						OVERVIEW
+					</h4>
+					<!-- <div class="card-header-btn">
+						<div class="dropdown dropdown-icon">
+							<a href="#" class="btn" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<a href="#" class="dropdown-item">Today</a>
+								<a href="#" class="dropdown-item">Yesterday</a>
+								<a href="#" class="dropdown-item active">Last 7 days</a>
+								<a href="#" class="dropdown-item">Last 28 days</a>
+							</div>
 						</div>
-					</div>
-				</div> -->
-			</div>
-			<!-- END card-header -->
-			<!-- BEGIN panel-body -->
-			<div class="card-body">
-				<div class="text-center p-t-15 p-b-30">
-					<div class="f-w-600">Right now</div>
-					<div class="f-s-80 line-height-1 m-xs">
-						<span data-id="active-user"><?= InfoBrowserChrome()?></span>
-					</div>
-					<div>active users on site</div>
+					</div> -->
 				</div>
-				<hr />
-				<ul class="list-inline m-b-10 text-center">
-					<li class="list-inline-item">
-						<span class="circle circle-sm bg-gradient-blue-purple-to-right m-r-5"></span> Desktop
-					</li>
-					<li class="list-inline-item">
-						<span class="circle circle-sm bg-black-transparent-8 m-r-5"></span> Mobile
-					</li>
-					<li class="list-inline-item">
-						<span class="circle circle-sm bg-muted m-r-5"></span> Tablet
-					</li>
-				</ul>
-				<div class="progress without-rounded-corner m-b-5">
-					<div class="progress-bar bg-gradient-blue-purple-to-right" data-id="desktop-user" style="width: 60%;">60%</div>
-					<div class="progress-bar bg-black-transparent-8" data-id="mobile-user" style="width: 25%;">25%</div>
-					<div class="progress-bar bg-muted" data-id="tablet-user" style="width: 15%;">15%</div>
+				<!-- END card-header -->
+				<!-- BEGIN panel-body -->
+				<div class="card-body">
+					<div class="text-center p-t-15 p-b-30">
+						<div class="f-w-600">Right now</div>
+						<div class="f-s-80 line-height-1 m-xs">
+							<span data-id="active-user"><?= InfoBrowserChrome()?></span>
+						</div>
+						<div>active users on site</div>
+					</div>
+					<hr />
+					<ul class="list-inline m-b-10 text-center">
+						<li class="list-inline-item">
+							<span class="circle circle-sm bg-gradient-blue-purple-to-right m-r-5"></span> Desktop
+						</li>
+						<li class="list-inline-item">
+							<span class="circle circle-sm bg-black-transparent-8 m-r-5"></span> Mobile
+						</li>
+						<li class="list-inline-item">
+							<span class="circle circle-sm bg-muted m-r-5"></span> Tablet
+						</li>
+					</ul>
+					<div class="progress without-rounded-corner m-b-5">
+						<div class="progress-bar bg-gradient-blue-purple-to-right" data-id="desktop-user" style="width: 60%;">60%</div>
+						<div class="progress-bar bg-black-transparent-8" data-id="mobile-user" style="width: 25%;">25%</div>
+						<div class="progress-bar bg-muted" data-id="tablet-user" style="width: 15%;">15%</div>
+					</div>
+					<p class="f-s-12 text-muted m-b-0">
+						* Data updates continuously and each pageview is reported seconds after it occurs.
+					</p>
 				</div>
-				<p class="f-s-12 text-muted m-b-0">
-					* Data updates continuously and each pageview is reported seconds after it occurs.
-				</p>
+				<!-- END panel-body -->
 			</div>
-			<!-- END panel-body -->
-		</div>
-		<!-- END card -->
+			<!-- END card -->
 			</div>
 			<div class="col-8">
 				<!-- BEGIN widget-reminder -->
@@ -782,7 +807,7 @@
 							<li class="timeline-item">
 								<strong><?= $row['email']?></strong>
 								<span class="float-right text-muted text-sm"><?= time_elapsed_string($row['tgl_log']);?></span>
-								<p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum...</p>
+								<p>Nam pretium turpis et arcu ipsum...</p>
 							</li>
 						<?php } ?>
 						</ul>
