@@ -1,102 +1,23 @@
+<span class="metadata-marker" style="display: none;" data-region_tag="html-body"></span>    <h3>asd Google Maps Demo</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+    <script>
 
-<?php 
-include_once 'core/db_connect.php';
-?>
-<style type="text/css">
-div.myautoscroll {
-    height: 40ex;
-    width: 40em;
-    overflow: hidden;
-    /*border: 1px solid #444;*/
-    margin-bottom: 3em;
+function initMap() {
+  // The location of Uluru
+  var uluru = {lat: -25.344, lng: 131.036};
+  // The map, centered at Uluru
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 4, center: uluru});
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({position: uluru, map: map});
 }
-div.myautoscroll:hover {
-    overflow: auto;
-}
-div.myautoscroll p {
-    /*padding-right: 16px;*/
-}
-div.myautoscroll:hover p {
-    padding-right: 0px;
-}
-
-
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888; 
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555; 
-}
-./*tbody {
-	width: 100%; float: left; display: block; overflow-y: scroll; max-height: 100px;
-}
-tr {
-	float: left; 
-	display: block;
-	text-align: center;
-}
-td {
-	float: left; display: block;
-	text-align: center;
-}
-tr {
-	width: 100%; 
-	height: auto;
-	text-align: center;
-}
-td {
-	width: 49%; float: left;
-	text-align: center;
-}
-.table {
-	width: 100%;
-}*/
-</style>
-<table class="table" >
-			    <thead>
-			        <tr >
-			            <td >
-			                Nama
-			            </td>
-			            <td >
-			                trafik
-			            </td>
-
-			            <td >
-			                Heading
-			            </td>
-			        </tr>
-			    </thead>
-    <tbody class="tbody">
-        <?php  
-							$sql="SELECT COUNT(*) AS `total`, DATE_FORMAT(visit_date, '%M') AS `jam`, ROUND((COUNT(visit_date)/(SELECT COUNT(*) FROM analytic))*100,0) AS persentasi FROM `analytic` GROUP BY `jam` ORDER BY total DESC";
-							$result = mysqli_query($connect, $sql);
-							@$no1++;
-							while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-							echo "<tr>" ;
-							echo "<td>" . $no1++ . "</td>";
-							echo	"<td>Jam " . $row['jam'] . "</td>";
-							echo	"<td class='text-center'>" . $row['total'] . "</td>";
-							echo	"<td class='text-left'> <div class='progress-bar bg-bar' role='progressbar' style='width: " . $row['persentasi'] . "%' aria-valuenow='" . $row['persentasi'] . "' aria-valuemin='0' aria-valuemax='100'>" . $row['persentasi'] . "%</div></td>";
-							echo	"</tr>";
-							}
-						?>
-    </tbody>
-</table>
-
-
-
-<hr>
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRxINL5JGJ3tH4LgQYzuWaoDnuMjBhS6A&callback=initMap">
+    </script>

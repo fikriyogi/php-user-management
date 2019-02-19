@@ -265,6 +265,7 @@ function userLog() {
         $connect = mysqli_connect('localhost', 'root', '', 'user-management');
         //Adds one to the counter
         $ip = getUserIP();
+        $sr = LANG();
         $browser = UserInfo::get_browser();
         $os = UserInfo::get_os();
         $hostname = gethostname();
@@ -272,6 +273,7 @@ function userLog() {
         $url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         $user = 3;
         $mac =  TotalAnalytic();
+        
         // $_SESSION['user']
         mysqli_query($connect, "INSERT INTO 
   `analytic` (
