@@ -1,4 +1,23 @@
-<?php include 'head.php'; ?>
+<?php 
+include 'head.php'; 
+if(isset($_POST['btn-add-user']))
+{
+	$uname = mysqli_real_escape_string($connect, $_POST['uname']);
+	$email = mysqli_real_escape_string($connect, $_POST['email']);
+	$upass = md5(mysqli_real_escape_string($connect, $_POST['pass']));
+	
+	if(mysqli_query($connect, "INSERT INTO users(username,email,password) VALUES('".$uname."','".$email."','".$upass."')"))
+	{
+            $msg = 'Congratulation you have successfully registered.';       
+	}
+	else
+	{
+            $msg = 'Error while registering you...';
+	}
+}
+
+?>
+
 <main class="content">
     <div class="container-fluid p-0">
 
@@ -6,6 +25,8 @@
 
         <div class="row">
             <div class="col-md-4 col-xl-3">
+
+            	<?= $msg ?>
 
                 <div class="card">
                     <div class="card-header">
@@ -47,13 +68,22 @@
                                 <h5 class="card-title mb-0">Public info</h5>
                             </div>
                             <div class="card-body">
-                                <form>
+                                <form method="POST">
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label for="inputUsername">Username</label>
-                                                <input type="text" class="form-control" id="inputUsername" placeholder="Username">
+                                                <input type="text" class="form-control" name="uname" placeholder="Username">
                                             </div>
+                                            <div class="form-group">
+                                                <label for="inputUsername">Email</label>
+                                                <input type="text" class="form-control" name="email"  placeholder="Email">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputUsername">Password</label>
+                                                <input type="password" class="form-control" name="pass" placeholder="Password">
+                                            </div>
+
                                             <div class="form-group">
                                                 <label for="inputUsername">Biography</label>
                                                 <textarea rows="2" class="form-control" id="inputBio" placeholder="Tell something about yourself"></textarea>
@@ -70,7 +100,7 @@
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                    <button type="submit" name="btn-add-user" class="btn btn-primary">Save changes</button>
                                 </form>
 
                             </div>

@@ -2,13 +2,12 @@
 include('core/db_connect.php');
 // $id = $_POST['id_dps'];
 //echo $music_number;
-if(isset($_GET['id_dps']))
+// $id = $_POST['user_id'];
+//echo $music_number;
+
+if(isset($_GET['id']))
 {
-$qry = "DELETE FROM dps WHERE id_dps =".$_GET['id_dps'];
-$result=mysqli_query($connect, $qry);
-if(isset($result)) {
-   echo "YES";
-} else {
-   echo "NO";
+     $sql = "DELETE FROM `dps` WHERE id=".$_GET['id'];
+     $query = mysqli_query($connect, $sql);
+	 echo 'Deleted successfully.';
 }
-?>

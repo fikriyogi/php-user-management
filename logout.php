@@ -14,8 +14,8 @@ else if(isset($_SESSION['user'])!="")
 if(isset($_GET['logout']))
 {
 
+	$logout = mysqli_query($connect, "INSERT INTO log (email, tgl_log, jenis_log) VALUES (e, timestamp(), logout)");
 	$sql = mysqli_query($connect, "UPDATE users SET status='0'  WHERE user_id=".$_SESSION['user']);
-	// $logout = mysqli_query($connect, "INSERT INTO log SET jenis_log='logout' and email=".$_SESSION['user']);
 	session_destroy();
 	unset($_SESSION['user']);
 	header("Location: login.php");

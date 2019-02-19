@@ -164,8 +164,8 @@
 												while($row=mysqli_fetch_array($b)){
 												@$nomor++;
 											?>
-											<tr id="<?= $row['id_dps']; ?>" style="background-color: <?php if ($row['tps'==1]) { echo "#fff"; } else { echo "#fff"; }?> ">
-												<td><a href="php/cetak/cetak-kartu-identitas-user.php?id_dps=<?= $row['id_dps']?>"><?= $row['nama']?></a></td>
+											<tr id="<?= $row['id']; ?>" style="background-color: <?php if ($row['tps'==1]) { echo "#fff"; } else { echo "#fff"; }?> ">
+												<td><a href="php/cetak/cetak-kartu-identitas-user.php?id=<?= $row['id']?>"><?= $row['nama']?></a></td>
 												<td>System Architect</td>
 												<td>Edinburgh</td>
 												<td>61</td>
@@ -231,7 +231,7 @@
 										?>
 										<tr>
 											<td>
-												<a href="php/cetak/cetak-kartu-identitas-user.php?id_dps=<?= $row['id_dps']?>"><img src="img/avatars/avatar-5.jpg" target="_blank" width="48" height="48" class="rounded-circle mr-2" alt="Avatar"> <?= $row['nama'] ?></a>
+												<a href="php/cetak/cetak-kartu-identitas-user.php?id=<?= $row['id']?>"><img src="img/avatars/avatar-5.jpg" target="_blank" width="48" height="48" class="rounded-circle mr-2" alt="Avatar"> <?= $row['nama'] ?></a>
 											</td>
 											<td>864-348-0485</td>
 											<td><?php 
@@ -341,29 +341,30 @@ for (var i = 0; i < btns.length; i++) {
 }
 </script>
 
-<!-- Ajax Delete -->
-<script type="text/javascript">
-	 $(".remove").click(function(){
-        var id_dps = $(this).parents("tr").attr("id");
+	<!-- Ajax Delete -->
+	<script type="text/javascript">
+		  $(".remove").click(function(){
+	        var id = $(this).parents("tr").attr("id");
 
 
-        if(confirm('Are you sure to remove this record ?'))
-        {
-            $.ajax({
-               url: 'delete-data.php',
-               type: 'GET',
-               data: {id_dps: id_dps},
-               error: function() {
-                  alert('Something is wrong');
-               },
-               success: function(data) {
-                    $("#"+id_dps).remove();
-                    alert("Record removed successfully");  
-               }
-            });
-        }
-    });
-</script>
+	        if(confirm('Are you sure to remove this record ?'))
+	        {
+	            $.ajax({
+	               url: 'delete-data.php',
+	               type: 'GET',
+	               data: {id: id},
+	               error: function() {
+	                  alert('Something is wrong');
+	               },
+	               success: function(data) {
+	                    $("#"+id).remove();
+	                    alert("Record removed successfully");  
+	               }
+	            });
+	        }
+	    });
+
+	</script>
 	<script src="js/app.js"></script>
 </body>
 

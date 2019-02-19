@@ -5,6 +5,9 @@ class UserInfo {
         private static function get_user_agent() {
                 return $_SERVER['HTTP_USER_AGENT'];
         }
+        public static function tes() {
+            echo "this is test public";
+        }
         public static function get_ip() {
                 $mainIp = '';
                 if (getenv('HTTP_CLIENT_IP')) $mainIp = getenv('HTTP_CLIENT_IP');
@@ -254,6 +257,7 @@ function SR() {
                 echo '<script type="text/javascript">window.location = "' . $_SERVER['PHP_SELF'] . '?width="+screen.width+"&height="+screen.height;</script>';
         }
 }
+
 // user log
 function userLog() {
         // Connects to your Database
@@ -266,13 +270,34 @@ function userLog() {
         $hostname = gethostname();
         $device = UserInfo::get_device();
         $url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        $resolution = LANG();
-        $mac =  LAT();
         $user = 3;
+        $sr = LANG();
+        $mac =  TotalAnalytic();
         // $_SESSION['user']
         mysqli_query($connect, "INSERT INTO 
-  `analytic` (`id`, `ip`, `browser`, `os`, `hostname`, `device`, `url`, `resolution`, `mac`, `user`, `visit_date`) 
-  VALUES (NULL, '$ip', '$browser', '$os', '$hostname', '$device', '$url', '$resolution', '$mac', '$user', CURRENT_TIMESTAMP)");
+  `analytic` (
+  `id`, 
+  `ip`, 
+  `browser`, 
+  `os`, 
+  `hostname`, 
+  `device`, 
+  `url`, 
+  `user`, 
+  `sr`, 
+  `mac`, 
+  `visit_date`) 
+  VALUES (NULL, 
+  '$ip', 
+  '$browser', 
+  '$os', 
+  '$hostname', 
+  '$device', 
+  '$url', 
+  '$user',
+  '$sr', 
+  '$mac',  
+  CURRENT_TIMESTAMP())");
         // mysqli_query($connect, "INSERT INTO analytic ");
         //Retrieves the current count
         // @$count = mysqli_fetch_row(mysqli_query($connect, "SELECT counter FROM counter"));

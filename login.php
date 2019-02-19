@@ -15,7 +15,7 @@ if(isset($_POST['btn-login']))
 
 	$res=mysqli_query($connect, "SELECT * FROM users WHERE email='$email' and banned='0'");
 	$sql = mysqli_query($connect, "UPDATE users SET status='1'  WHERE email='$email'");
-	$log = mysqli_query($connect, "INSERT INTO log SET email='$email'");
+	$log = mysqli_query($connect, "INSERT INTO log SET email='$email', jenis_log='login'");
 	$row=mysqli_fetch_array($res);
 	
 	if($row['password']==md5($upass))
