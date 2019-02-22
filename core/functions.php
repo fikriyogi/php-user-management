@@ -261,8 +261,7 @@ function SR() {
 // user log
 function userLog() {
         // Connects to your Database
-  
-        $connect = mysqli_connect('localhost', 'root', '', 'user-management');
+        include 'db_connect.php';
         //Adds one to the counter
         $ip = getUserIP();
         $sr = LANG();
@@ -565,4 +564,37 @@ function PersenChrome() {
         $persentasi = round($B / $A * 100, 2);
         echo $persentasi;
 }
+
+function get_file_extension($file_name) {
+    return substr(strrchr($file_name,'.'),1);
+}
+
+function no_surat() {
+    $agenda = 141;
+    echo $agenda;
+}
+
+
+
+
+function get_menu_tree($id) 
+{
+    include 'db_connect.php';
+    $menu = "";
+    $sqlquery = " SELECT * FROM menu where parent='0' and parent='" .$id . "' order by post_order_no ASC ";
+    $res=mysqli_query($connect,$sqlquery);
+    while($row=mysqli_fetch_array($res,MYSQLI_ASSOC)) 
+    {
+           $menu .='<li class="sidebar-item" id="'.$row["id"].'">
+                                    <a href="'.$row["link"].'"  class="font-weight-bold sidebar-link ">
+                          <i class="align-middle" data-feather="users"></i> <span class="align-middle">'.$row["title"].'</span>
+                          
+                        </a>
+                                    
+                                </li>';
+ 
+    }
+    
+    return $menu;
+} 
 
