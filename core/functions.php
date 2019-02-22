@@ -581,7 +581,8 @@ function get_menu_tree($id)
 {
     include 'db_connect.php';
     $menu = "";
-    $sqlquery = " SELECT * FROM menu where parent='0' and parent='" .$id . "' order by post_order_no ASC ";
+    // $sqlquery = " SELECT * FROM menu where parent='0' and parent='" .$id . "' order by post_order_no ASC ";
+    $sqlquery = " SELECT * FROM menu order by post_order_no ASC ";
     $res=mysqli_query($connect,$sqlquery);
     while($row=mysqli_fetch_array($res,MYSQLI_ASSOC)) 
     {

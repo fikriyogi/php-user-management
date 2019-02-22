@@ -63,5 +63,30 @@ include "../core/db_connect.php";
  
 		header('location:../menu.php');
 	}
- 
+	// delete menu
+	if (isset($_GET['delete'])) {	
+		$id = $_GET['delete'];
+		$sql=mysqli_query($connect,"DELETE FROM `menu` WHERE `menu`.`id` = '$id';"); 
+		header('location:../menu.php');
+	}
+
+	if (isset($_POST['edit-menu'])) {
+		
+		$id = $_POST['id'];
+		$title = $_POST['title'];
+		$link = $_POST['link'];
+
+		//query update
+		$query = mysqli_query($connect, "UPDATE menu SET title='$title' , link='$link' WHERE id='$id' ");
+
+		if ($query) {
+		 # credirect ke page index
+		 header("location:../menu.php"); 
+		}
+		else{
+		 echo "ERROR, data gagal diupdate". mysql_error();
+		}
+	 }
+
+
 ?>

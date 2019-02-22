@@ -16,23 +16,30 @@
 						<h6 class="card-subtitle text-muted">
 					</div>
 					<div class="card-body">
+<?php
+include 'core/db_connect.php';
+$id = $_GET['edit']; 
+$query=mysqli_query($connect,"SELECT * FROM menu WHERE id='$id'");
+        while($r=mysqli_fetch_array($query)){ 
+?>
+<input type="hidden" name="id" value="<?= $r['id']; ?>">
 
 						<div class="form-group">
 							<label class="form-label">Title</label>
-							<input type="text" class="form-control" name="title" placeholder="Title">
+							<input type="text" class="form-control" name="title" value="<?= $r['title']; ?>">
 						</div>
 
 						<div class="form-group">
 							<label class="form-label">Link</label>
-							<input type="text" class="form-control" name="link" placeholder="Link">
+							<input type="text" class="form-control" name="link" value="<?= $r['link']; ?>">
 						</div>
 						<div class="form-group">
 							<label class="form-label">Parent</label>
-							<input type="text" class="form-control" name="parent" placeholder="Link">
+							<input type="text" class="form-control" name="parent" value="<?= $r['parent']; ?>">
 						</div>
 						<div class="form-group">
 							<label class="form-label">Order</label>
-							<input type="text" class="form-control" name="post_order_no" placeholder="Link">
+							<input type="text" class="form-control" name="post_order_no" value="<?= $r['post_order_no']; ?>">
 						</div>
 						<div class="form-group">
 							<label class="form-label">Email address</label>
@@ -44,64 +51,16 @@
 							</select>
 						</div>
 
-						<button type="submit" id="tambah-menu" name="tambah-menu" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span> Simpan</button>
+						<button type="submit" id="edit-menu" name="edit-menu" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span> Edit</button>
 						
-										
+							<?php } ?>			
 
 					</div>
 				</div>
 			
 			</div>
 
-			<div class="col-8">
-				<div class="card">
-					<div class="card-header">
-						<h5 class="card-title">List of Menu</h5>
-						<h6 class="card-subtitle text-muted">
-					</div>
-					<div class="card-body">
-						<h3 class="text-center">Dynamic Drag and Drop table rows in PHP Mysql - ItSolutionStuff.com</h3>
-        <table class="table table-bordered">
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Link</th>
-                <th>Defination</th>
-                <th>Delete</th>
-            </tr>
-            <tbody class="row_position">
-            <?php
-
-
-            require('core/db_connect.php');
-
-
-            $sql = "SELECT * FROM menu ORDER BY post_order_no";
-            $users = $connect->query($sql);
-            while($r = $users->fetch_assoc()){
-            	@$no++;
-
-            ?>
-                <tr  id="<?= $r['id'] ?>">
-                    <td><?= $no ?></td>
-                    <td><?= $r['title'] ?></td>
-                    <td><a href="<?= $r['link'] ?>"><?= $r['link'] ?></a></td>
-                    <td><?= $r['id'] ?></td>
-                    <td><a href="edit-menu?edit=<?= $r['id'] ?>">Edit</a>||<a href="php/action.php?delete=<?= $r['id'] ?>"  onclick="return confirm('Are you sure?')">Delete</a>
-                    	<!-- <button type="submit" id="delete-menu" name="delete-menu" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button> -->
-                    </td>
-                </tr>
-
-
-
-
-
-            <?php } ?>
-            </tbody>
-        </table>
-					</div>
-				</div>
-			</div>
+		
 
 		</div>
 	</form>
